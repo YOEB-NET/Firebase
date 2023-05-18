@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
-    // 17.06.2023 | YOEB.NET X BERKAY.ME
+    // 18.06.2023 | YOEB.NET X BERKAY.ME
 
     $token = "<FCM-Token>";
 
