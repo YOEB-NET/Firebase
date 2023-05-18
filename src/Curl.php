@@ -1,6 +1,7 @@
 <?php
+namespace Yoeb\Firebase;
 
-class curl {
+class Curl {
 
     public static function get($url, $header = []){
        $curl = curl_init();

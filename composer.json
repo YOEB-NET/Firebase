@@ -1,0 +1,16 @@
+{
+    "name": "yoeb/firebase",
+    "description": "yoeb.net",
+    "autoload": {
+        "psr-4": {
+            "Yoeb\\Firebase\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "YOEB",
+            "email": "support@yoeb.net"
+        }
+    ],
+    "require": {}
+}

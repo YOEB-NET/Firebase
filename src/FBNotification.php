@@ -1,13 +1,15 @@
 <?php
 
-    class notifications {
+namespace Yoeb\Firebase;
+
+    class FBNotification {
         
         private static $authorization = "Authorization: key=<Server-Key>";
 
 
         public static function info($token){
             
-            $data = curl::get("https://iid.googleapis.com/iid/info/$token", [self::$authorization]);
+            $data = Curl::get("https://iid.googleapis.com/iid/info/$token", [self::$authorization]);
             return $data;
 
         }
@@ -19,7 +21,7 @@
                 $extra = (object) $extra;
             }
 
-            $data = curl::post("https://fcm.googleapis.com/fcm/send",
+            $data = Curl::post("https://fcm.googleapis.com/fcm/send",
             [
                 'priority' => $priority,
                 'registration_ids' => $tokens,
@@ -35,7 +37,7 @@
         // --- Topic ---
         public static function batchAdd($topic, $tokens){
 
-            $data = curl::post("https://iid.googleapis.com/iid/v1:batchAdd", ["to" => "/topics/$topic", "registration_tokens" => $tokens], [self::$authorization, "Content-Type: application/json"], true);
+            $data = Curl::post("https://iid.googleapis.com/iid/v1:batchAdd", ["to" => "/topics/$topic", "registration_tokens" => $tokens], [self::$authorization, "Content-Type: application/json"], true);
             return $data;
 
         }
@@ -43,7 +45,7 @@
 
         public static function batchRemove($topic, $tokens){
 
-            $data = curl::post("https://iid.googleapis.com/iid/v1:batchRemove", ["to" => "/topics/$topic", "registration_tokens" => $tokens], [self::$authorization, "Content-Type: application/json"], true);
+            $data = Curl::post("https://iid.googleapis.com/iid/v1:batchRemove", ["to" => "/topics/$topic", "registration_tokens" => $tokens], [self::$authorization, "Content-Type: application/json"], true);
             return $data;
 
         }
@@ -51,7 +53,7 @@
 
         public static function relTopics($token, $topic){
 
-            $data = curl::post("https://iid.googleapis.com/iid/v1/$token/rel/topics/$topic", [], [self::$authorization]);
+            $data = Curl::post("https://iid.googleapis.com/iid/v1/$token/rel/topics/$topic", [], [self::$authorization]);
             return $data;
 
         }
@@ -62,7 +64,7 @@
                 $extra = (object) $extra;
             }
 
-            $data = curl::post("https://fcm.googleapis.com/fcm/send",
+            $data = Curl::post("https://fcm.googleapis.com/fcm/send",
             [
                 'to' => "/topics/$topic",
                 'notification'     => ["title" => $title, "body" => $message],
@@ -78,7 +80,7 @@
         public static function group($operation, $groupName, $tokens, $notificationKey = "")
         {
             
-            $data = curl::post("https://android.googleapis.com/gcm/notification", 
+            $data = Curl::post("https://android.googleapis.com/gcm/notification", 
             [
 
                 "operation" => $operation,
@@ -96,7 +98,7 @@
                 $extra = (object) $extra;
             }
 
-            $data = curl::post("https://fcm.googleapis.com/fcm/send",
+            $data = Curl::post("https://fcm.googleapis.com/fcm/send",
             [
                 'to' => $groupName,
                 'notification'     => ["title" => $title, "body" => $message],
