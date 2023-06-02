@@ -1,6 +1,6 @@
 <?php
 
-// 18.05.2023 | YOEB.NET X BERKAY.ME
+// 02.06.2023 | YOEB.NET X BERKAY.ME
 
 namespace Yoeb\Firebase;
 
@@ -14,7 +14,24 @@ namespace Yoeb\Firebase;
         }
 
 
-        public static function send($tokens, $title, $message, $extra = [], $priority = "HIGH" ){
+        public static function send(
+            $tokens,
+            $title,
+            $message,
+            $image = null,
+            $extra = [],
+            $priority = "HIGH",
+            $restrictedPackageName = null,
+            $channelId = null,
+            $icon = null,
+            $color = null,
+            $sound = null,
+            $tag = null,
+            $localOnly = false,
+            $notificationCount = 0,
+            $link = null,
+            $analyticsLabel = null,
+        ){
 
             if(empty($extra)){
                 $extra = (object) $extra;
@@ -22,15 +39,39 @@ namespace Yoeb\Firebase;
 
             $data = Curl::post("https://fcm.googleapis.com/fcm/send",
             [
-                'priority' => $priority,
-                'registration_ids' => $tokens,
-                'notification'     => ["title" => $title, "body" => $message],
-                'data'             => $extra,
-            ], 
+                'priority'          => $priority,
+                'registration_ids'  => $tokens,
+                'notification'      => [
+                    'title'         => $title,
+                    'body'          => $message,
+                    'image'         => $image,
+                    'color'         => $color,
+                    'tag'           => $tag,
+
+                ],
+                'data'              => $extra,
+                'android'           => [
+                    'restricted_package_name'   => $restrictedPackageName,
+                    'channelId'                 => $channelId,
+                    'local_only'                => $localOnly,
+                    'icon'                      => $icon,
+                    'sound'                     => $sound,
+                    'notification_count'        => $notificationCount
+                ],
+
+                'webpush'   => [
+                    'link'  => $link,
+                ],
+
+                'fcm_options' =>  [
+                    'analytics_label'           => $analyticsLabel,
+                ],
+            ],
             ["Authorization: key=".$_ENV["FB_SERVER_KEY"], "Content-Type: application/json"], true);
             return $data;
 
         }
+
 
 
         // --- Topic ---
@@ -65,7 +106,7 @@ namespace Yoeb\Firebase;
 
             $data = Curl::post("https://fcm.googleapis.com/fcm/send",
             [
-                'to' => "/topics/$topic",
+                'to'               => "/topics/$topic",
                 'notification'     => ["title" => $title, "body" => $message],
                 'data'             => $extra,
             ], 
