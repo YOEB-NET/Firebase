@@ -12,5 +12,7 @@
             "email": "support@yoeb.net"
         }
     ],
+    "license": "MIT",
     "require": {}
+    
 }
