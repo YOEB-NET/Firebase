@@ -15,6 +15,7 @@
     ],
     "license": "MIT",
     "require": {
+        "php": "^8.0.2"
     },
     "minimum-stability": "stable",
     "type": "library"
