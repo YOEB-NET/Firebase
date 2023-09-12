@@ -1,6 +1,6 @@
 <?php
 
-// 02.06.2023 | YOEB.NET X BERKAY.ME
+// 12.09.2023 | YOEB.NET X BERKAY.ME
 
 namespace Yoeb\Firebase;
 
@@ -46,6 +46,17 @@ namespace Yoeb\Firebase;
             [
                 "refresh_token"     => $refreshToken,
                 "grant_type"        => "refresh_token",
+            ]);
+
+            return $data;
+        }
+
+        public static function sendEmailVerify($token)
+        {
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=".$_ENV["FB_API_KEY"],
+            [
+                "idToken"           => $token,
+                "requestType"       => "VERIFY_EMAIL",
             ]);
 
             return $data;
