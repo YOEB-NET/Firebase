@@ -1,6 +1,6 @@
 <?php
 
-// 12.09.2023 | YOEB.NET X BERKAY.ME
+// 28.09.2023 | YOEB.NET X BERKAY.ME
 
 namespace Yoeb\Firebase;
 
@@ -62,6 +62,39 @@ namespace Yoeb\Firebase;
             return $data;
         }
 
-    }       
+        public static function passwordResetSendMail($email)
+        {
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=".$_ENV["FB_API_KEY"],
+            [
+                "email"             => $email,
+                "requestType"       => "PASSWORD_RESET",
+            ]);
+
+            return $data;
+        }
+
+        public static function passwordOobCodeCheck($code)
+        {
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=".$_ENV["FB_API_KEY"],
+            [
+                "oobCode"           => $code,
+                "requestType"       => "PASSWORD_RESET",
+            ]);
+
+            return $data;
+        }
+
+        public static function passwordReset($code,$password)
+        {
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=".$_ENV["FB_API_KEY"],
+            [
+                "oobCode"           => $code,
+                "newPassword"       => $password,
+                "requestType"       => "PASSWORD_RESET",
+            ]);
+
+            return $data;
+        }
+    }
 
 ?>
