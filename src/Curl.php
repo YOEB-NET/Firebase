@@ -1,6 +1,9 @@
 <?php
 namespace Yoeb\Firebase;
 
+use Google\Client;
+
+
 class Curl {
 
     public static function get($url, $header = []){
@@ -26,11 +29,10 @@ class Curl {
             print_r($response);
         }
         return $jsonResponse;
-        
-    }
-    
-    public static function post($url , $parameters = [], $header = [], $postJSON = false){
 
+    }
+
+    public static function post($url , $parameters = [], $header = [], $postJSON = false){
         if($postJSON){
             $postData = JSON_encode($parameters);
         }else{
@@ -38,7 +40,7 @@ class Curl {
         }
 
         $curl = curl_init();
- 
+
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
             CURLOPT_POST => true,
@@ -48,7 +50,7 @@ class Curl {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
         ));
-        
+
         $response = curl_exec($curl);
         curl_close($curl);
 
@@ -58,6 +60,20 @@ class Curl {
         }
         return $jsonResponse;
 
+    }
+
+    static function googleGetAccessTonek() {
+
+        $keyFilePath = "/Users/berkay/Documents/GitHub/OdevYardim-Laravel/adminsqk.json";
+        $scopes = ['https://www.googleapis.com/auth/cloud-platform'];
+
+        $client = new Client();
+        $client->setAuthConfig($keyFilePath);
+        $client->setScopes($scopes);
+
+        $accessToken = $client->fetchAccessTokenWithAssertion();
+
+        return $accessToken;
     }
 
 }
