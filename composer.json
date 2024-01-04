@@ -1,6 +1,6 @@
 {
     "name": "yoeb/firebase",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "yoeb.net",
     "autoload": {
         "psr-4": {
