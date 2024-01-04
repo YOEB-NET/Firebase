@@ -62,6 +62,28 @@ namespace Yoeb\Firebase;
             return $data;
         }
 
+        public static function confirmEmailVerify($oobCode)
+        {
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:update?key=".$_ENV["FB_API_KEY"],
+            [
+                "oobCode"           => $oobCode,
+            ]);
+
+            return $data;
+        }
+
+        public static function passwordChange($token, $password, $returnSecureToken = true)
+        {
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:update?key=".$_ENV["FB_API_KEY"],
+            [
+                "idToken"           => $token,
+                "password"          => $password,
+                "returnSecureToken" => $returnSecureToken,
+            ]);
+
+            return $data;
+        }
+
         public static function passwordResetSendMail($email)
         {
             $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=".$_ENV["FB_API_KEY"],
