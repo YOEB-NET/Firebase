@@ -7,8 +7,8 @@ namespace Yoeb\Firebase;
     class FBNotification {
 
         public static function info($token){
-            
-            $data = Curl::get("https://iid.googleapis.com/iid/info/$token", ["Authorization: key=".$_ENV["FB_SERVER_KEY"]]);
+
+            $data = Curl::get("https://iid.googleapis.com/iid/info/$token", ["Authorization: key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key"))]);
             return $data;
 
         }
@@ -67,7 +67,7 @@ namespace Yoeb\Firebase;
                     'analytics_label'           => $analyticsLabel,
                 ],
             ],
-            ["Authorization: key=".$_ENV["FB_SERVER_KEY"], "Content-Type: application/json"], true);
+            ["Authorization: key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")), "Content-Type: application/json"], true);
             return $data;
 
         }
@@ -77,15 +77,15 @@ namespace Yoeb\Firebase;
         // --- Topic ---
         public static function batchAdd($topic, $tokens){
 
-            $data = Curl::post("https://iid.googleapis.com/iid/v1:batchAdd", ["to" => "/topics/$topic", "registration_tokens" => $tokens], ["Authorization: key=".$_ENV["FB_SERVER_KEY"], "Content-Type: application/json"], true);
+            $data = Curl::post("https://iid.googleapis.com/iid/v1:batchAdd", ["to" => "/topics/$topic", "registration_tokens" => $tokens], ["Authorization: key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")), "Content-Type: application/json"], true);
             return $data;
 
         }
-        
+
 
         public static function batchRemove($topic, $tokens){
 
-            $data = Curl::post("https://iid.googleapis.com/iid/v1:batchRemove", ["to" => "/topics/$topic", "registration_tokens" => $tokens], ["Authorization: key=".$_ENV["FB_SERVER_KEY"], "Content-Type: application/json"], true);
+            $data = Curl::post("https://iid.googleapis.com/iid/v1:batchRemove", ["to" => "/topics/$topic", "registration_tokens" => $tokens], ["Authorization: key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")), "Content-Type: application/json"], true);
             return $data;
 
         }
@@ -93,7 +93,7 @@ namespace Yoeb\Firebase;
 
         public static function relTopics($token, $topic){
 
-            $data = Curl::post("https://iid.googleapis.com/iid/v1/$token/rel/topics/$topic", [], ["Authorization: key=".$_ENV["FB_SERVER_KEY"]]);
+            $data = Curl::post("https://iid.googleapis.com/iid/v1/$token/rel/topics/$topic", [], ["Authorization: key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key"))]);
             return $data;
 
         }
@@ -109,8 +109,8 @@ namespace Yoeb\Firebase;
                 'to'               => "/topics/$topic",
                 'notification'     => ["title" => $title, "body" => $message],
                 'data'             => $extra,
-            ], 
-            ["Authorization: key=".$_ENV["FB_SERVER_KEY"], "Content-Type: application/json"], true);
+            ],
+            ["Authorization: key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")), "Content-Type: application/json"], true);
             return $data;
 
         }
@@ -119,8 +119,8 @@ namespace Yoeb\Firebase;
         // --- Group ---
         public static function group($operation, $groupName, $tokens, $notificationKey = "")
         {
-            
-            $data = Curl::post("https://android.googleapis.com/gcm/notification", 
+
+            $data = Curl::post("https://android.googleapis.com/gcm/notification",
             [
 
                 "operation" => $operation,
@@ -128,7 +128,7 @@ namespace Yoeb\Firebase;
                 "notification_key" => $notificationKey,
                 "registration_ids" => $tokens
 
-            ], ["Authorization: key=".$_ENV["FB_SERVER_KEY"], "Content-Type: application/json", "project_id: 187731126505"], true);
+            ], ["Authorization: key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")), "Content-Type: application/json", "project_id: 187731126505"], true);
             return $data;
         }
 
@@ -143,14 +143,14 @@ namespace Yoeb\Firebase;
                 'to' => $groupName,
                 'notification'     => ["title" => $title, "body" => $message],
                 'data'             => $extra,
-            ], 
-            ["Authorization: key=".$_ENV["FB_SERVER_KEY"], "Content-Type: application/json"], true);
+            ],
+            ["Authorization: key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")), "Content-Type: application/json"], true);
             return $data;
 
         }
 
 
 
-    }       
+    }
 
 ?>

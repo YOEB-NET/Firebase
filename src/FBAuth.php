@@ -8,7 +8,7 @@ namespace Yoeb\Firebase;
 
         public static function user($idToken)
         {
-            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=".$_ENV["FB_API_KEY"],
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")),
             [
                 "idToken"  => $idToken,
             ]);
@@ -18,7 +18,7 @@ namespace Yoeb\Firebase;
 
         public static function register($email, $password, $returnSecureToken = true)
         {
-            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=".$_ENV["FB_API_KEY"],
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")),
             [
                 "email"     => $email,
                 "password"  => $password,
@@ -30,7 +30,7 @@ namespace Yoeb\Firebase;
 
         public static function login($email, $password, $returnSecureToken = true)
         {
-            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=".$_ENV["FB_API_KEY"],
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")),
             [
                 "email"     => $email,
                 "password"  => $password,
@@ -42,7 +42,7 @@ namespace Yoeb\Firebase;
 
         public static function tokenRefresh($refreshToken)
         {
-            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/token?key=".$_ENV["FB_API_KEY"],
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/token?key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")),
             [
                 "refresh_token"     => $refreshToken,
                 "grant_type"        => "refresh_token",
@@ -53,7 +53,7 @@ namespace Yoeb\Firebase;
 
         public static function sendEmailVerify($token)
         {
-            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=".$_ENV["FB_API_KEY"],
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")),
             [
                 "idToken"           => $token,
                 "requestType"       => "VERIFY_EMAIL",
@@ -64,7 +64,7 @@ namespace Yoeb\Firebase;
 
         public static function confirmEmailVerify($oobCode)
         {
-            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:update?key=".$_ENV["FB_API_KEY"],
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:update?key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")),
             [
                 "oobCode"           => $oobCode,
             ]);
@@ -74,7 +74,7 @@ namespace Yoeb\Firebase;
 
         public static function passwordChange($token, $password, $returnSecureToken = true)
         {
-            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:update?key=".$_ENV["FB_API_KEY"],
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:update?key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")),
             [
                 "idToken"           => $token,
                 "password"          => $password,
@@ -86,7 +86,7 @@ namespace Yoeb\Firebase;
 
         public static function passwordResetSendMail($email)
         {
-            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=".$_ENV["FB_API_KEY"],
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")),
             [
                 "email"             => $email,
                 "requestType"       => "PASSWORD_RESET",
@@ -97,7 +97,7 @@ namespace Yoeb\Firebase;
 
         public static function passwordOobCodeCheck($code)
         {
-            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=".$_ENV["FB_API_KEY"],
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")),
             [
                 "oobCode"           => $code,
                 "requestType"       => "PASSWORD_RESET",
@@ -108,7 +108,7 @@ namespace Yoeb\Firebase;
 
         public static function passwordReset($code,$password)
         {
-            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=".$_ENV["FB_API_KEY"],
+            $data = Curl::post("https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=".($_ENV["FB_API_KEY"] ?? config("firebase.api_key")),
             [
                 "oobCode"           => $code,
                 "newPassword"       => $password,
